@@ -2,11 +2,11 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const multer = require('multer')
+const mongoose = require('mongoose');
 
 const app = express();
 const port = 3000
 
-const mongoose = require('mongoose');
 const Trainer = require("./TrainerSchema")
 
 mongoose.connect('mongodb://localhost:27017/local')
@@ -42,7 +42,6 @@ app.post("/trainer", upload.single("image"), async (req, res) => {
     if (!req.file) {
         return res.status(400).send("No file uploaded");
     }
-
     const trainer = await Trainer.create({
         name: req.body.name,
         gender: req.body.gender,
@@ -50,9 +49,7 @@ app.post("/trainer", upload.single("image"), async (req, res) => {
         phno: req.body.phno,
         image: req.file.filename
     });
-
     return res.status(200).json({ trainer });
-
     const imagepath = path.join(__dirname, "./Src/images", req.file.filename);
     res.sendFile(imagepath);
 });
@@ -70,7 +67,6 @@ app.get("/trainer/images/:filename", async (req, res) => {
 
 app.listen(port, (err) => {
     if (err) {
-
         console.error("Error starting the server:", err);
     } else {
         console.log("Server has started on port " + port);
