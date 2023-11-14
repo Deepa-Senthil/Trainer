@@ -17,6 +17,8 @@ mongoose.connect('mongodb://localhost:27017/local')
         console.error('Error connecting to MongoDB:', error);
     });
 
+
+    
 app.use(cors({
     origin: "http://localhost:5173"
 }))
